@@ -47,7 +47,7 @@ def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_no
     y_sine_day_night = y_sine_day_night[idx]
     ax1.plot(t, y_sine_day_night, c='lightgray')
     ax1.plot(t[y_sine_day_night != 0], y_sine_day_night[y_sine_day_night != 0], 'b.')
-    ax1.set_title('Time Series with Day/Night Cycle - Sine Wave')
+    ax1.set_title('Time Series')
     ax1.set_xlabel('Time [hr]')
     ax1.set_ylabel('Amplitude')
 
