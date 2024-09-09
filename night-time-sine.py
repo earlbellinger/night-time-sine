@@ -26,9 +26,9 @@ blue = "#0571b0"
 def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_noise_std, day_fraction, irregular, logy):
     # Generate time series (regular or irregular)
     if irregular:
-        t = np.sort(np.random.uniform(0, length, num_observations))
+        t = np.sort(np.random.uniform(0, length*24, num_observations))
     else:
-        t = np.linspace(0, length, num_observations)
+        t = np.linspace(0, length*24, num_observations)
 
     np.random.seed(0)
     
@@ -97,7 +97,7 @@ st.title("Lomb-Scargle Periodogram of a Sine Wave with a Day/Night Cycle")
 st.sidebar.title("Controls")
 
 # Sidebar user inputs for the parameters
-length = st.sidebar.slider('Length of Observation [hrs]', min_value=1, max_value=1000, value=300, step=1)
+length = st.sidebar.slider('Length of Observation [days]', min_value=1, max_value=365*2, value=12, step=1)
 num_observations = st.sidebar.slider('Number of Observations', min_value=10, max_value=10000, value=5000, step=10)
 period = st.sidebar.slider('Period [hrs]', min_value=0.1, max_value=100.0, value=9.8, step=0.1)
 phase = st.sidebar.slider('Phase [radians]', min_value=0.0, max_value=2 * np.pi, value=0.0, step=0.1)
