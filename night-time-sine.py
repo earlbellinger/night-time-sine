@@ -41,18 +41,23 @@ def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_no
 
     # Plot the time series
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
-
+    
     idx = np.argsort(t)
     t = t[idx]
     y_sine_day_night = y_sine_day_night[idx]
     ax1.plot(t, y_sine_day_night, c='lightgray')
-    ax1.plot(t[y_sine_day_night != 0], y_sine_day_night[y_sine_day_night != 0], 'b.')
+    idx2 = y_sine_day_night != 0
+    if len(idx2) > 0:
+        ax1.plot(t[idx2], y_sine_day_night[idx2], 'b.')
     ax1.set_title('Time Series')
     ax1.set_xlabel('Time [hr]')
     ax1.set_ylabel('Amplitude')
 
     # Plot Lomb-Scargle periodogram
-    ax2.plot(frequency, power)
+    if len(frequency) > 0:
+        ax2.plot(frequency, power)
+    else:
+        ax2.plot(None, None)
     ax2.axhline(0, ls='--', c='k', zorder=-99)
     ax2.axvline(1/period, ls='-', c='orange', zorder=-999, label='True period')
     if day_fraction < 1:
