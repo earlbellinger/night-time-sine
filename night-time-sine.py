@@ -40,7 +40,7 @@ def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_no
     frequency, power = LombScargle(t[mask], y_sine_day_night[mask]).autopower()
 
     # Plot the time series
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 
     idx = np.argsort(t)
     t = t[idx]
@@ -65,11 +65,10 @@ def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_no
 
     ax2.legend()
     ax2.semilogx()
-    ax2.set_title('Lomb-Scargle Periodogram - Day/Night Cycle')
+    ax2.set_title('Lomb-Scargle Periodogram')
     ax2.set_xlabel('Frequency [1/hr]')
     ax2.set_ylabel('Power')
 
-    #plt.tight_layout()
     st.pyplot(fig)
 
 # Streamlit App
