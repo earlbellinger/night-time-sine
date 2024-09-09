@@ -4,16 +4,16 @@ from astropy.timeseries import LombScargle
 import streamlit as st
 
 # some statements to make the figures look nicer 
-plt.rcParams.update({'axes.linewidth' : 2.1,
-                     'ytick.major.width' : 2.1,
-                     'ytick.minor.width' : 2.1,
-                     'xtick.major.width' : 2.1,
-                     'xtick.minor.width' : 2.1,
+plt.rcParams.update({'axes.linewidth' : 1.5,
+                     'ytick.major.width' : 1.5,
+                     'ytick.minor.width' : 1.5,
+                     'xtick.major.width' : 1.5,
+                     'xtick.minor.width' : 1.5,
                      'xtick.labelsize': 12, 
                      'ytick.labelsize': 12,
-                     'axes.labelsize': 15,
+                     'axes.labelsize': 18,
                      'axes.labelpad' : 5,
-                     'axes.titlesize' : 18,
+                     'axes.titlesize' : 22,
                      'axes.titlepad' : 10,
                      'font.family': 'Serif'
                     })
@@ -55,25 +55,25 @@ def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_no
     ax1.plot(t, y_sine_day_night, c='lightgray')
     idx2 = y_sine_day_night != 0
     if len(idx2) > 0:
-        ax1.plot(t[idx2], y_sine_day_night[idx2], 'b.', ms=3)
+        ax1.plot(t[idx2], y_sine_day_night[idx2], '.', c='dodgerblue', ms=3)
     ax1.set_title('Time Series')
     ax1.set_xlabel('Time [hr]')
     ax1.set_ylabel('Amplitude')
 
     # Plot Lomb-Scargle periodogram
     if len(frequency) > 0:
-        ax2.plot(frequency, power, c='#222222aa')
+        ax2.plot(frequency, power, c='dodgerblue', alpha=0.8, lw=2)
     else:
         ax2.plot([], [])
-    ax2.axhline(0, ls='--', c='k', zorder=-99)
+    ax2.axhline(0, ls='--', lw=1.5, c='k', zorder=-9999)
     ax2.axvline(1/period, ls='-', c='orange', lw=3, zorder=-999, label='True period')
     if day_fraction < 1:
-        ax2.axvline(np.abs(1/period - 1/24), ls='--', c=red, zorder=-999, label=r'Day/night alias |1/p $-$ 1/day|')
-        ax2.axvline(1/period + 1/24, ls='-', c=red, zorder=-999, label='Day/night alias (1/p + 1/day)')
+        ax2.axvline(np.abs(1/period - 1/24), ls='--', c='darkred', zorder=-999, label=r'Daily alias |1/p $-$ 1/day|', alpha=0.8)
+        ax2.axvline(1/period + 1/24, ls=':', c='darkred', zorder=-999, label=r'Daily alias (1/p + 1/day)', alpha=0.8)
     
     if not irregular:
-        ax2.axvline(1/35.17 + 1/(np.max(t)/len(t)), ls='-', c='darkgray', zorder=-999, label='1/p + 1/sampling')
-        ax2.axvline(1/35.17 + 2/(np.max(t)/len(t)), ls='-', c='darkgray', zorder=-999, label='1/p + 2/sampling')
+        ax2.axvline(1/35.17 + 1/(np.max(t)/len(t)), ls='--', c='darkgray', zorder=-999, label='Sampling alias (1/p + 1/sampling)')
+        ax2.axvline(1/35.17 + 2/(np.max(t)/len(t)), ls=':', c='darkgray', zorder=-999, label='Sampling alias (1/p + 2/sampling)')
 
     ax2.legend(loc='best')
     ax2.semilogx()
@@ -99,10 +99,10 @@ st.sidebar.title("Controls")
 # Sidebar user inputs for the parameters
 length = st.sidebar.slider('Length of Observation [hrs]', min_value=1, max_value=1000, value=300, step=1)
 num_observations = st.sidebar.slider('Number of Observations', min_value=10, max_value=10000, value=5000, step=10)
-period = st.sidebar.slider('Period [hrs]', min_value=0.1, max_value=100.0, value=35.17, step=0.1)
+period = st.sidebar.slider('Period [hrs]', min_value=0.1, max_value=100.0, value=9.8, step=0.1)
 phase = st.sidebar.slider('Phase [radians]', min_value=0.0, max_value=2 * np.pi, value=0.0, step=0.1)
-y_noise_std = st.sidebar.slider('Y Noise Std', min_value=0.0, max_value=10.0, value=0.0, step=0.1)
-t_noise_std = st.sidebar.slider('T Noise Std', min_value=0.0, max_value=10.0, value=0.0, step=0.1)
+y_noise_std = st.sidebar.slider('y noise std', min_value=0.0, max_value=10.0, value=0.0, step=0.1)
+t_noise_std = st.sidebar.slider('t noise std', min_value=0.0, max_value=10.0, value=0.0, step=0.1)
 day_fraction = st.sidebar.slider('Day/Night Duty Cycle', min_value=0.05, max_value=1.0, value=0.5, step=0.05)
 irregular = st.sidebar.checkbox('Irregular Spacing', value=False)
 logy = st.sidebar.checkbox('log power', value=False)
