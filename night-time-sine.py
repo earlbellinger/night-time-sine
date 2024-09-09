@@ -84,7 +84,7 @@ period = st.sidebar.slider('Period [hrs]', min_value=0.1, max_value=100.0, value
 phase = st.sidebar.slider('Phase [radians]', min_value=0.0, max_value=2 * np.pi, value=0.0, step=0.1)
 y_noise_std = st.sidebar.slider('Y Noise Std', min_value=0.0, max_value=10.0, value=0.0, step=0.1)
 t_noise_std = st.sidebar.slider('T Noise Std', min_value=0.0, max_value=10.0, value=0.0, step=0.1)
-day_fraction = st.sidebar.slider('Day/Night Duty Cycle', min_value=0.0, max_value=1.0, value=0.5, step=0.05)
+day_fraction = st.sidebar.slider('Day/Night Duty Cycle', min_value=0.05, max_value=1.0, value=0.5, step=0.05)
 irregular = st.sidebar.checkbox('Irregular Spacing', value=False)
 
 # Generate and plot results based on user input
