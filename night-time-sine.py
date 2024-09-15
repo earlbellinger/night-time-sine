@@ -44,7 +44,7 @@ def plot_lomb_scargle(length, num_observations, period, phase, y_noise_std, t_no
     y_sine_day_night = y_sine * mask 
     
     # Compute Lomb-Scargle periodogram
-    frequency, power = LombScargle(t[mask], y_sine_day_night[mask]).autopower() if len(mask) > 10 else ([], [])
+    frequency, power = LombScargle(t[mask], y_sine_day_night[mask], y_noise_std).autopower() if len(mask) > 10 else ([], [])
 
     # Plot the time series
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8))
